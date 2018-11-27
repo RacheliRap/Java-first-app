@@ -2,7 +2,10 @@ package com.example.racheli.myapplication.model.entities;
 
 import java.sql.Time;
 
-public class Ride {
+public class Ride implements java.io.Serializable  {
+
+    private static final long serialVersionUID = 1L;
+
     private String origin;
     private String destination;
     private Time startingTime;
