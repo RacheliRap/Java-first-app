@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="location_message">Enter Your Location:</string>
-    <string name="dest_message">Enter your destination:</string>
+    <string name="location_message"> Enter Your Location:</string>
+    <string name="dest_message"> Enter your destination:</string>
     <string name="location_button">Add</string>
+    <string name="Destinion_messege">Enter your destinion:</string>
+    <string name="Start_time">Start time</string>
+    <string name="End_time">Arrival time</string>
 </resources>
