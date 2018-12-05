@@ -127,11 +127,12 @@
             android:layout_marginEnd="51dp"
             android:layout_marginTop="8dp"
             android:entries="@array/Travel_Time"
-            app:layout_constraintEnd_toStartOf="@+id/time_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-     <!--   <Button
+     <!--               app:layout_constraintEnd_toStartOf="@+id/time_button"
+
+     <Button
             android:id="@+id/time_button"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -187,7 +188,7 @@
      android:layout_gravity="end"
      android:text="@string/Order_Button" />
 
-    <Button
+   <!-- <Button
         android:id="@+id/btnDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -196,11 +197,11 @@
         android:background="@color/colorAccent"
         android:padding="10dp"
         android:text="Select a date"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white" />-->
 
-    <app:com.example.com.example.racheli.myapplication.CustomDatePicker
+    <!--<app:com.example.com.example.racheli.myapplication.CustomDatePicker
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
 
 </LinearLayout>
