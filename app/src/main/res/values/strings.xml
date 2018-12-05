@@ -3,7 +3,33 @@
     <string name="location_message"> Enter Your Location:</string>
     <string name="dest_message"> Enter your destination:</string>
     <string name="location_button">Add</string>
-    <string name="Destinion_messege">Enter your destinion:</string>
     <string name="Start_time">Start time</string>
     <string name="End_time">Arrival time</string>
+    <string name="pick_time">Start time</string>
+    <string name="Email_message">Enter your Email:</string>
+    <string name="Phone_message">Enter your phone number:</string>
+    <string name="CreditCard_message">Credit Card number:</string>
+    <string name="Name_message">Your name:</string>
+    <string name="Order_Button">Order Ride</string>
+
+    <string name="Name_textBox">name textbox</string>
+    <string name="Status_spinner">Status Spinner</string>
+    <string name="Status_spinner_title">Status</string>
+    <string name="Dest_textBox">dentition Textbox</string>
+    <string name="Loc_textBox">location textbox</string>
+    <string name="Time_spinner">time spinner</string>
+    <string name="Time_button">Time button</string>
+    <string name="Email_textbox">Email textbox</string>
+    <string name="Phone_textbox">Phone textbox</string>
+    <string name="cc_textbox">Credit card textbox</string>
+
+    <string-array name="Travel_Time">
+        <item>Departure time</item>
+        <item>Arrival time</item>
+    </string-array>
+    <string-array name="Travel_status">
+        <item>Available</item>
+        <item>On</item>
+        <item>Done</item>
+    </string-array>
 </resources>

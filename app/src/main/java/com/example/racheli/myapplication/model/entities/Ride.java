@@ -3,9 +3,13 @@ package com.example.racheli.myapplication.model.entities;
 import java.sql.Time;
 
 public class Ride implements java.io.Serializable  {
+    enum  Status{
+        AVAILABLE, ON, DONE
+    }
 
     private static final long serialVersionUID = 1L;
 
+    private Status status;
     private String origin;
     private String destination;
     private Time startingTime;
@@ -13,6 +17,10 @@ public class Ride implements java.io.Serializable  {
     private String passengerName;
     private String passengerNumber;
     private String passengerMail;
+
+    public Status getStatus() { return status; }
+
+    public void setStatus(Status status) { this.status = status; }
 
     public String getOrigin() {
         return origin;
@@ -70,7 +78,8 @@ public class Ride implements java.io.Serializable  {
         this.passengerMail = passengerMail;
     }
 
-    public Ride(String origin, String destination, Time startingTime, Time endingTime, String passengerName, String passengerNumber, String passengerMail) {
+    public Ride(Status status, String origin, String destination, Time startingTime, Time endingTime, String passengerName, String passengerNumber, String passengerMail) {
+        this.status = status;
         this.origin = origin;
         this.destination = destination;
         this.startingTime = startingTime;
