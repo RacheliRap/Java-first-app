@@ -2,6 +2,7 @@ package com.example.racheli.myapplication;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -20,7 +22,23 @@ public class MainActivity extends Activity //implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final EditText chooseTime = findViewById(R.id.etChooseTime);
+        chooseTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        chooseTime.setText(hourOfDay + ":" + minutes);
+                    }
+                }, 0, 0, true);
+                timePickerDialog.show();
+            }
+        });
     }
+
+
    /* private Spinner statusSpinner;
     private EditText nameTextview;
     private EditText locTextview;

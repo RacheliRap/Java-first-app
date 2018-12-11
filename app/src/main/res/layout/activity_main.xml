@@ -7,62 +7,6 @@
     android:orientation="vertical" >
 
 
-
-   <!-- <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:layout_marginBottom="545dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/location_message"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.52" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="88dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/location_button"
-            app:layout_constraintBaseline_toBaselineOf="@+id/editText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/editText" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="45dp"
-            android:layout_height="28dp"
-            app:srcCompat="@android:color/holo_red_dark"
-            tools:layout_editor_absoluteX="307dp"
-            tools:layout_editor_absoluteY="72dp" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="273dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="16dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="72dp" />
-
-</android.support.constraint.ConstraintLayout>-->
-
-
     <Spinner
         android:id="@+id/status_spinner"
         android:layout_width="match_parent"
@@ -127,12 +71,12 @@
             android:layout_marginEnd="51dp"
             android:layout_marginTop="8dp"
             android:entries="@array/Travel_Time"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+            <!--app:layout_constraintEnd_toStartOf="@+id/time_button"
             app:layout_constraintTop_toTopOf="parent" />
 
-     <!--               app:layout_constraintEnd_toStartOf="@+id/time_button"
 
-     <Button
+    <!- <Button
             android:id="@+id/time_button"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -174,8 +118,7 @@
         android:ems="10"
         android:inputType="number"
         android:hint="@string/CreditCard_message"
-        android:textSize="20sp"
-        />
+        android:textSize="20sp" />
     <!--<TimePicker
         android:id="@+id/simpleTimePicker"
         android:layout_width="wrap_content"
@@ -188,20 +131,12 @@
      android:layout_gravity="end"
      android:text="@string/Order_Button" />
 
-   <!-- <Button
-        android:id="@+id/btnDate"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/etChooseTime"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@color/colorAccent"
-        android:padding="10dp"
-        android:text="Select a date"
-        android:textColor="@android:color/white" />-->
-
-    <!--<app:com.example.com.example.racheli.myapplication.CustomDatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />-->
+        android:hint="Choose the time"/>
 
 </LinearLayout>
