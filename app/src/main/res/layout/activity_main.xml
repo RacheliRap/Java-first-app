@@ -139,4 +139,9 @@
         android:layout_centerVertical="true"
         android:hint="Choose the time" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/etChooseTime1"/>
+
 </LinearLayout>
