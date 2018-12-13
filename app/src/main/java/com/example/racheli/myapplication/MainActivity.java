@@ -12,7 +12,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.example.racheli.myapplication.model.backend.Backend;
+import com.example.racheli.myapplication.model.backend.BackendFactory;
+import com.example.racheli.myapplication.model.datasource.Firebase_DBManager;
 import com.example.racheli.myapplication.model.entities.Ride;
 
 import java.sql.Time;
@@ -95,6 +99,13 @@ public class MainActivity extends Activity implements View.OnClickListener
 
     public void addRide(){
         Ride ride = getRide();
+        Backend instance = BackendFactory.getInstance();
+        try{
+            instance.addRide(ride);
+        }
+        catch (Exception e){
+        }
+
 
 
     }
