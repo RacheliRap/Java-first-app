@@ -9,7 +9,7 @@ public class Ride implements java.io.Serializable  {
 
     private static final long serialVersionUID = 1L;
 
-    private int ID;
+    private Long ID;
     private Status status;
     private String origin;
     private String destination;
@@ -18,6 +18,11 @@ public class Ride implements java.io.Serializable  {
     private String passengerName;
     private String passengerNumber;
     private String passengerMail;
+
+
+    public Long getID() { return ID; }
+
+    public void setID(Long ID) { this.ID = ID; }
 
     public Status getStatus() { return status; }
 

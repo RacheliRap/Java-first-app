@@ -13,9 +13,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.Editable;
 import com.example.racheli.myapplication.model.backend.Backend;
 import com.example.racheli.myapplication.model.backend.BackendFactory;
+import com.example.racheli.myapplication.model.datasource.Action;
 import com.example.racheli.myapplication.model.datasource.Firebase_DBManager;
 import com.example.racheli.myapplication.model.entities.Ride;
 
@@ -101,13 +104,30 @@ public class MainActivity extends Activity implements View.OnClickListener
         Ride ride = getRide();
         Backend instance = BackendFactory.getInstance();
         try{
-            instance.addRide(ride);
-        }
-        catch (Exception e){
-        }
+            instance.addRide(ride, new Action<Long>() {
+                @Override
+                public void onSuccess(Long obj) {
+                    Toast.makeText(getBaseContext(), "insert id " + obj, Toast.LENGTH_LONG).show();
+                   // resetView();
+                }
 
+                @Override
+                public void onFailure(Exception exception) {
+                    Toast.makeText(getBaseContext(), "Error \n" + exception.getMessage(), Toast.LENGTH_LONG).show();
+                   // resetView();
+                }
 
-
+                @Override
+                public void onProgress(String status, double percent) {
+                    if (percent != 100)
+                        orderButton.setEnabled(false);
+                    //addStudentProgressBar.setProgress((int) percent);
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(getBaseContext(), "Error ", Toast.LENGTH_LONG).show();
+            //resetView();
+        };
     }
 
     public Ride getRide(){
@@ -133,7 +153,12 @@ public class MainActivity extends Activity implements View.OnClickListener
         return ride;
     }
 
+
+
 }
+
+
+
 
 
 
