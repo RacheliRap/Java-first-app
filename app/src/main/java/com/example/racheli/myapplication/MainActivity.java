@@ -96,6 +96,7 @@ public class MainActivity extends Activity implements View.OnClickListener
     public void addRide(){
         Ride ride = getRide();
 
+
     }
 
     public Ride getRide(){
@@ -107,8 +108,8 @@ public class MainActivity extends Activity implements View.OnClickListener
         ride.setOrigin(this.locTextview.getText().toString());
 
         String time = this.etChooseTime.getText().toString();
+        time = time + ":00";
         Time timeValue = Time.valueOf(time);
-
         String timeOption = (String)this.timeSpinner.getSelectedItem();
         if(timeOption == "Departure time"){
             ride.setStartingTime(timeValue);
