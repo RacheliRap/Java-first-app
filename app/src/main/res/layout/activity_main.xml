@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
 
     <Spinner
@@ -14,21 +14,20 @@
         android:layout_marginEnd="51dp"
         android:layout_marginTop="8dp"
         android:entries="@array/Travel_status"
-        android:prompt="@string/Status_spinner_title"
-        />
+        android:prompt="@string/Status_spinner_title" />
+
     <Space
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="match_parent" />
 
     <EditText
         android:id="@+id/name_textview"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/Name_message"
-        android:textSize="20sp"
-        />
+        android:inputType="textPersonName"
+        android:textSize="20sp" />
 
     <Space
         android:layout_width="match_parent"
@@ -38,10 +37,10 @@
         android:id="@+id/loc_textview"
         android:layout_width="270dp"
         android:layout_height="50dp"
-        android:hint="@string/location_message"
         android:gravity="bottom"
-        android:textSize="20sp"
-        android:inputType="textPostalAddress"/>
+        android:hint="@string/location_message"
+        android:inputType="textPostalAddress"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/dest_textview"
@@ -49,10 +48,10 @@
         android:layout_height="50dp"
         android:gravity="bottom"
         android:hint="@string/dest_message"
+        android:inputType="textPostalAddress"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:inputType="textPostalAddress"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Space
         android:layout_width="match_parent"
@@ -71,23 +70,24 @@
             android:layout_marginEnd="51dp"
             android:layout_marginTop="8dp"
             android:entries="@array/Travel_Time"
-            app:layout_constraintStart_toStartOf="parent"/>
-            <!--app:layout_constraintEnd_toStartOf="@+id/time_button"
+            app:layout_constraintEnd_toStartOf="@+id/etChooseTime"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-    <!- <Button
-            android:id="@+id/time_button"
+        <EditText
+            android:id="@+id/etChooseTime"
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="end"
             android:layout_marginEnd="52dp"
-            android:onClick="showTimePickerDialog"
-            android:text="@string/pick_time"
+            android:hint="Choose the time"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.111" />-->
+            app:layout_constraintVertical_bias="0.111" />
+
 
     </android.support.constraint.ConstraintLayout>
 
@@ -96,52 +96,44 @@
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textEmailAddress"
         android:hint="@string/Email_message"
-        android:textSize="20sp"
-        />
+        android:inputType="textEmailAddress"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/phone_textview"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="phone"
         android:hint="@string/Phone_message"
-        android:textSize="20sp"
-        />
+        android:inputType="phone"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/cc_textview"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number"
         android:hint="@string/CreditCard_message"
+        android:inputType="number"
         android:textSize="20sp" />
+
     <!--<TimePicker
         android:id="@+id/simpleTimePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"/>-->
- <Button
-     android:id="@+id/order_button"
-     android:layout_width="270dp"
-     android:layout_height="40dp"
-     android:layout_gravity="end"
-     android:text="@string/Order_Button" />
-
-    <EditText
-        android:id="@+id/etChooseTime"
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:hint="Choose the time" />
+        android:layout_height="10dp" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/etChooseTime1"/>
+        android:id="@+id/order_button"
+        android:layout_width="270dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/Order_Button" />
+
 
 </LinearLayout>

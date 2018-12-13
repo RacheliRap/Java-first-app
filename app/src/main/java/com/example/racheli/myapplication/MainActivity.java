@@ -52,8 +52,8 @@ public class MainActivity extends Activity implements View.OnClickListener
         phoneTextview = (EditText)findViewById( R.id.phone_textview );
         ccTextview = (EditText)findViewById( R.id.cc_textview );
         orderButton = (Button)findViewById( R.id.order_button );
-        etChooseTime = (EditText)findViewById( R.id.etChooseTime );
-        final EditText chooseTime = findViewById(R.id.etChooseTime);
+        etChooseTime = findViewById( R.id.etChooseTime );
+        //final EditText chooseTime = (EditText)findViewById(R.id.etChooseTime);
 
         etChooseTime.setOnClickListener(this);
 
@@ -81,7 +81,7 @@ public class MainActivity extends Activity implements View.OnClickListener
             TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                    etChooseTime.setText(hourOfDay + ":" + minutes);
+                    etChooseTime.setText((hourOfDay + ":" + minutes).toString());
                 }
             }, 0, 0, true);
             timePickerDialog.show();
