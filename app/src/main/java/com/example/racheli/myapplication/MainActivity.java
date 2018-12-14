@@ -22,12 +22,17 @@ import com.example.racheli.myapplication.model.datasource.Action;
 import com.example.racheli.myapplication.model.datasource.Firebase_DBManager;
 import com.example.racheli.myapplication.model.entities.Ride;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends Activity implements View.OnClickListener
 {
@@ -67,12 +72,6 @@ public class MainActivity extends Activity implements View.OnClickListener
         orderButton.setOnClickListener( this );
     }
 
-    /**
-     * Handle button click events<br />
-     * <br />
-     * Auto-created on 2018-12-12 20:15:04 by Android Layout Finder
-     * (http://www.buzzingandroid.com/tools/android-layout-finder)
-     */
 
 
     @Override
@@ -102,12 +101,14 @@ public class MainActivity extends Activity implements View.OnClickListener
 
     public void addRide(){
         Ride ride = getRide();
-        Backend instance = BackendFactory.getInstance();
+
         try{
+            //String jsonObj = quickParse(ride);
+            Backend instance = BackendFactory.getInstance();
             instance.addRide(ride, new Action<Long>() {
                 @Override
                 public void onSuccess(Long obj) {
-                    Toast.makeText(getBaseContext(), "insert id " + obj, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Succeeded" + obj, Toast.LENGTH_LONG).show();
                    // resetView();
                 }
 
@@ -134,26 +135,42 @@ public class MainActivity extends Activity implements View.OnClickListener
         Ride ride = new Ride();
         ride.setPassengerName(this.nameTextview.getText().toString());
         ride.setPassengerMail(this.emailTextview.getText().toString());
-        ride.setPassengerNumber(this.phoneTextview.getText().toString());
+        ride.setPhoneNumber(this.phoneTextview.getText().toString());
         ride.setDestination(this.destTextview.getText().toString());
         ride.setOrigin(this.locTextview.getText().toString());
-
+        ride.setCreditCard(this.ccTextview.getText().toString());
         String time = this.etChooseTime.getText().toString();
         time = time + ":00";
         Time timeValue = Time.valueOf(time);
-        String timeOption = (String)this.timeSpinner.getSelectedItem();
-        if(timeOption == "Departure time"){
+       // String timeOption = (String)this.timeSpinner.getSelectedItem();
+       /* if(timeOption == "Departure time"){
             ride.setStartingTime(timeValue);
         }
         else
-        {
+        {*/
            ride.setEndingTime(timeValue);
-        }
-        
+        //}
+
         return ride;
     }
+    //the function converts object to Json format
+   /* public static String quickParse(Ride ride) throws IllegalArgumentException, IllegalAccessException, JSONException {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put("Name", ride.getPassengerName());
+            jsonObj.put("Origin:", ride.getOrigin());
+            jsonObj.put("Destination:", ride.getDestination());
+            jsonObj.put("Time", ride.getEndingTime());
+            jsonObj.put("Phone number", ride.getPhoneNumber());
+            jsonObj.put("email", ride.getPassengerMail());
+            jsonObj.put("Credit card", ride.getCreditCard());
 
-
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return jsonObj.toString();
+    }*/
 
 }
 

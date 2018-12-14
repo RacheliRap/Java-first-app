@@ -9,8 +9,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Firebase_DBManager implements Backend{
 
@@ -29,19 +33,24 @@ public class Firebase_DBManager implements Backend{
         void onFailure(Exception exception);
     }
 
-    static DatabaseReference RideRef;
+    static DatabaseReference rideRef;
 
 
     static {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        RideRef = database.getReference("students");
+        rideRef = database.getReference("rides");
     }
     @Override
     public void addRide(final Ride ride, final Action<Long> action) throws Exception
     {
+        final Map<String,Object> dataMap = new HashMap<String, Object>();
+        dataMap.put("Ride1" , ride.toMap());
+        rideRef.setValue(dataMap);
         //String key = Ride.getID().toString();
-        RideRef.push().setValue(ride).addOnSuccessListener(new OnSuccessListener<Void>() {
+        //String a = rideRef.push().getKey();
+       // rideRef.child("789786986876").setValue(ride);
+               /* .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 action.onSuccess(ride.getID());
@@ -54,7 +63,7 @@ public class Firebase_DBManager implements Backend{
                 action.onProgress("error upload ride data", 100);
 
             }
-        });
+        });*/
     }
 
 
