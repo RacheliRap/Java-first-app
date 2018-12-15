@@ -1,14 +1,16 @@
 package com.example.racheli.myapplication;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -22,21 +24,10 @@ import com.example.racheli.myapplication.model.datasource.Action;
 import com.example.racheli.myapplication.model.datasource.Firebase_DBManager;
 import com.example.racheli.myapplication.model.entities.Ride;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 public class MainActivity extends Activity implements View.OnClickListener
 {
-    //Widgets definition
+    //Widgets definitions
+    ArrayAdapter<String> adapter ;
     private Spinner statusSpinner;
     private EditText nameTextview;
     private EditText locTextview;
@@ -47,6 +38,8 @@ public class MainActivity extends Activity implements View.OnClickListener
     private EditText ccTextview;
     private Button orderButton;
     private EditText etChooseTime;
+    private ProgressBar addProgressBar;
+
 
     /**
      * Find the Views in the layout
@@ -63,67 +56,11 @@ public class MainActivity extends Activity implements View.OnClickListener
         ccTextview = (EditText)findViewById( R.id.cc_textview );
         orderButton = (Button)findViewById( R.id.order_button );
         etChooseTime = findViewById( R.id.etChooseTime );
-        //final EditText chooseTime = (EditText)findViewById(R.id.etChooseTime);
+        addProgressBar = findViewById(R.id.addProgressBar);
+
 
         etChooseTime.setOnClickListener(this);
         orderButton.setOnClickListener( this );
-
-        /*emailTextview.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-                    String email = emailTextview.getText().toString();
-                    String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-                    java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-                    java.util.regex.Matcher m = p.matcher(email);
-                    if (!m.matches()) {
-                        Toast.makeText(getBaseContext(), "invalid email adress" , Toast.LENGTH_LONG).show();
-                        emailTextview.setText("");
-                    }}
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-            }
-
-        });
-        phoneTextview.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-                if(phoneTextview.getText().toString().length() != 9)
-                {
-                    Toast.makeText(getBaseContext(), "invalid phone number" , Toast.LENGTH_LONG).show();
-                    phoneTextview.setText("");
-                }
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-        });
-
-        ccTextview.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-                if(ccTextview.getText().toString().length() != 16)
-                {
-                    Toast.makeText(getBaseContext(), "invalid credit card number" , Toast.LENGTH_LONG).show();
-                    ccTextview.setText("");
-                }
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-        });*/
-
     }
 
 
@@ -133,21 +70,90 @@ public class MainActivity extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
+        initTextChangeListener();
+        }
+
+    private void initSpinner() {
+        timeSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+    }
+
+    /**
+     * check for input correct using addTextChangedListener class.
+     */
+    public void initTextChangeListener() {
+        TextWatcher t = new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //check for email input
+                if (getCurrentFocus() == emailTextview) {
+                    String email = emailTextview.getText().toString();
+                    String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+                    java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+                    java.util.regex.Matcher m = p.matcher(email);
+                    if (!m.matches()) {
+                        Toast.makeText(getBaseContext(), "invalid email address", Toast.LENGTH_LONG).show();
+                        emailTextview.setText("");
+                    }
+                }
+                //check for phone input
+                else if (getCurrentFocus() == phoneTextview) {
+                    Toast.makeText(getBaseContext(), "invalid phone number", Toast.LENGTH_LONG).show();
+                    phoneTextview.setText("");
+                }
+                //check credit card input
+                else if (getCurrentFocus() == ccTextview) {
+                    Toast.makeText(getBaseContext(), "invalid credit card number", Toast.LENGTH_LONG).show();
+                    ccTextview.setText("");
+                }
+                //check for location input
+                else if (getCurrentFocus() == locTextview) {
+
+                }
+                //check for definition input
+                else if (getCurrentFocus() == destTextview) {
+
+                }
+            }
 
         };
+        destTextview.addTextChangedListener(t);
+        locTextview.addTextChangedListener(t);
+        ccTextview.addTextChangedListener(t);
+        phoneTextview.addTextChangedListener(t);
+        emailTextview.addTextChangedListener(t);
+    }
     @Override
     /**
-     * onClick method. Define what will happend at each button/ TextView press
+     * onClick method. Define what will happened at each button/ TextView press
      */
     public void onClick(View view) {
+        // create timePickerDialog in respond to click the text view.
+
         if (view == etChooseTime) {
+            //create timePickerDialog
             TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
+                //set timePicker
                 public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
                     etChooseTime.setText((hourOfDay + ":" + minutes).toString());
                 }
             }, 0, 0, true);
-            timePickerDialog.show();
+            timePickerDialog.show(); // make timepicker to show on ui
         }
         if ( view == orderButton ) {
             // Handle clicks for orderButton
@@ -161,6 +167,7 @@ public class MainActivity extends Activity implements View.OnClickListener
      */
     public void addRide(){
         Ride ride = getRide();
+        orderButton.setEnabled(false);//prevent the user press again, until the data is successfully insert into DB
 
         try{
             //String jsonObj = quickParse(ride);
@@ -169,20 +176,20 @@ public class MainActivity extends Activity implements View.OnClickListener
                 @Override
                 public void onSuccess(String obj) {
                     Toast.makeText(getBaseContext(), "Succeeded" + obj, Toast.LENGTH_LONG).show();
-                   // resetView();
+                   resetView();
                 }
 
                 @Override
                 public void onFailure(Exception exception) {
                     Toast.makeText(getBaseContext(), "Error \n" + exception.getMessage(), Toast.LENGTH_LONG).show();
-                   // resetView();
+                   resetView();
                 }
 
                 @Override
                 public void onProgress(String status, double percent) {
                     if (percent != 100)
                         orderButton.setEnabled(false);
-                    //addStudentProgressBar.setProgress((int) percent);
+                    addProgressBar.setProgress((int) percent);
                 }
             });
         } catch (Exception e) {
@@ -207,34 +214,27 @@ public class MainActivity extends Activity implements View.OnClickListener
         //time = time + ":00";
         //Time timeValue = Time.valueOf(time);
        // String timeOption = (String)this.timeSpinner.getSelectedItem();
-       if(time == "Departure time"){
-            ride.setStartingTime(time);
+       if(time == "Arrival time"){
+           ride.setEndingTime(time);
         }
         else
         {
-           ride.setEndingTime(time);
+            ride.setStartingTime(time);
         }
 
         return ride;
     }
-    //the function converts object to Json format
-   /* public static String quickParse(Ride ride) throws IllegalArgumentException, IllegalAccessException, JSONException {
-        JSONObject jsonObj = new JSONObject();
-        try {
-            jsonObj.put("Name", ride.getPassengerName());
-            jsonObj.put("Origin:", ride.getOrigin());
-            jsonObj.put("Destination:", ride.getDestination());
-            jsonObj.put("Time", ride.getEndingTime());
-            jsonObj.put("Phone number", ride.getPhoneNumber());
-            jsonObj.put("email", ride.getPassengerMail());
-            jsonObj.put("Credit card", ride.getCreditCard());
-
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return jsonObj.toString();
-    }*/
+    private void resetView() {
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        addProgressBar.setProgress(0);
+                        orderButton.setEnabled(true);
+                    }
+                },
+                1500);
+    }
 
 }
 

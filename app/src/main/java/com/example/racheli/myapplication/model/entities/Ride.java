@@ -111,6 +111,7 @@ public class Ride implements java.io.Serializable{
     }
 
     public Ride(){}
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> results = new HashMap<>();

@@ -52,11 +52,10 @@ public class Firebase_DBManager implements Backend{
     public void addRide(final Ride ride, final Action<String> action) throws Exception
     {
         final Map<String,Object> dataMap = new HashMap<String, Object>();
-        dataMap.put("Ride1" , ride.toMap());
         rideRef.push().setValue(ride).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                action.onSuccess("insert ride");
+                action.onSuccess(" insert ride");
                 action.onProgress("upload ride data", 100);
             }
         }).addOnFailureListener(new OnFailureListener() {
