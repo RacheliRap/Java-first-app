@@ -36,7 +36,7 @@ import java.util.Map;
 
 public class MainActivity extends Activity implements View.OnClickListener
 {
-
+    //Widgets definition
     private Spinner statusSpinner;
     private EditText nameTextview;
     private EditText locTextview;
@@ -49,10 +49,8 @@ public class MainActivity extends Activity implements View.OnClickListener
     private EditText etChooseTime;
 
     /**
-     * Find the Views in the layout<br />
-     * <br />
-     * Auto-created on 2018-12-12 20:15:04 by Android Layout Finder
-     * (http://www.buzzingandroid.com/tools/android-layout-finder)
+     * Find the Views in the layout
+     * @return void
      */
     private void findViews() {
         statusSpinner = (Spinner)findViewById( R.id.status_spinner );
@@ -68,8 +66,64 @@ public class MainActivity extends Activity implements View.OnClickListener
         //final EditText chooseTime = (EditText)findViewById(R.id.etChooseTime);
 
         etChooseTime.setOnClickListener(this);
-
         orderButton.setOnClickListener( this );
+
+        /*emailTextview.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                    String email = emailTextview.getText().toString();
+                    String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+                    java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+                    java.util.regex.Matcher m = p.matcher(email);
+                    if (!m.matches()) {
+                        Toast.makeText(getBaseContext(), "invalid email adress" , Toast.LENGTH_LONG).show();
+                        emailTextview.setText("");
+                    }}
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+        });
+        phoneTextview.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                if(phoneTextview.getText().toString().length() != 9)
+                {
+                    Toast.makeText(getBaseContext(), "invalid phone number" , Toast.LENGTH_LONG).show();
+                    phoneTextview.setText("");
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });
+
+        ccTextview.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                if(ccTextview.getText().toString().length() != 16)
+                {
+                    Toast.makeText(getBaseContext(), "invalid credit card number" , Toast.LENGTH_LONG).show();
+                    ccTextview.setText("");
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });*/
+
     }
 
 
@@ -82,6 +136,9 @@ public class MainActivity extends Activity implements View.OnClickListener
 
         };
     @Override
+    /**
+     * onClick method. Define what will happend at each button/ TextView press
+     */
     public void onClick(View view) {
         if (view == etChooseTime) {
             TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
@@ -99,15 +156,18 @@ public class MainActivity extends Activity implements View.OnClickListener
 
     }
 
+    /**
+     * Create the ride and try to send it to Firebase_DBManager for insert to DB
+     */
     public void addRide(){
         Ride ride = getRide();
 
         try{
             //String jsonObj = quickParse(ride);
             Backend instance = BackendFactory.getInstance();
-            instance.addRide(ride, new Action<Long>() {
+            instance.addRide(ride, new Action<String>() {
                 @Override
-                public void onSuccess(Long obj) {
+                public void onSuccess(String obj) {
                     Toast.makeText(getBaseContext(), "Succeeded" + obj, Toast.LENGTH_LONG).show();
                    // resetView();
                 }
@@ -131,6 +191,10 @@ public class MainActivity extends Activity implements View.OnClickListener
         };
     }
 
+    /**
+     * connect to each Wodget on activity_main, and get the data the user typed, in order to initalize Ride
+     * @return ride with relevant data
+     */
     public Ride getRide(){
         Ride ride = new Ride();
         ride.setPassengerName(this.nameTextview.getText().toString());
@@ -139,17 +203,17 @@ public class MainActivity extends Activity implements View.OnClickListener
         ride.setDestination(this.destTextview.getText().toString());
         ride.setOrigin(this.locTextview.getText().toString());
         ride.setCreditCard(this.ccTextview.getText().toString());
-        String time = this.etChooseTime.getText().toString();
-        time = time + ":00";
-        Time timeValue = Time.valueOf(time);
+        String time = (this.etChooseTime.getText().toString());
+        //time = time + ":00";
+        //Time timeValue = Time.valueOf(time);
        // String timeOption = (String)this.timeSpinner.getSelectedItem();
-       /* if(timeOption == "Departure time"){
-            ride.setStartingTime(timeValue);
+       if(time == "Departure time"){
+            ride.setStartingTime(time);
         }
         else
-        {*/
-           ride.setEndingTime(timeValue);
-        //}
+        {
+           ride.setEndingTime(time);
+        }
 
         return ride;
     }

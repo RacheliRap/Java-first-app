@@ -3,28 +3,30 @@ package com.example.racheli.myapplication.model.entities;
 import com.google.firebase.database.Exclude;
 
 import java.sql.Time;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+//Ride class.
 public class Ride implements java.io.Serializable{
     enum  Status{
         AVAILABLE, ON, DONE
     }
 
     //private static final long serialVersionUID = 1L;
-    //@Exclude
     //private Long ID;
-    //private Status status;
+    @Exclude
+    private Status status;
     private String origin;
     private String destination;
-    //private Time startingTime;
-    private Time endingTime;
+    private String startingTime = "";
+    private String endingTime = "";
     private String passengerName;
     private String passengerMail;
     private String phoneNumber;
     private String creditCard;
 
-    public Ride(String origin, String destination, Time endingTime, String passengerName, String passengerMail, String phoneNumber, String creditCard) {
+    public Ride(String origin, String destination, String endingTime, String passengerName, String passengerMail, String phoneNumber, String creditCard) {
         this.origin = origin;
         this.destination = destination;
         this.endingTime = endingTime;
@@ -35,14 +37,22 @@ public class Ride implements java.io.Serializable{
     }
 
 
-   /* @Exclude
-    public Long getID() {
-        return ID;
+    public Status getStatus() {
+        return status;
     }
-    @Exclude
-    public void setID(Long ID) {
-        this.ID = ID;
-    }*/
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getStartingTime() {
+        return startingTime;
+    }
+
+    public void setStartingTime(String startingTime) {
+        this.startingTime = startingTime;
+    }
+
 
     public String getOrigin() {
         return origin;
@@ -60,11 +70,11 @@ public class Ride implements java.io.Serializable{
         this.destination = destination;
     }
 
-    public Time getEndingTime() {
+    public String getEndingTime() {
         return endingTime;
     }
 
-    public void setEndingTime(Time endingTime) {
+    public void setEndingTime(String endingTime) {
         this.endingTime = endingTime;
     }
 
