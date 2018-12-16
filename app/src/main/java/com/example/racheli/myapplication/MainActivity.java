@@ -68,7 +68,7 @@ public class MainActivity extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
-        //initTextChangeListener();
+        initTextChangeListener();
         }
 
     private void initSpinner() {
@@ -85,56 +85,56 @@ public class MainActivity extends Activity implements View.OnClickListener
      * check for input correct using addTextChangedListener class.
      */
     public void initTextChangeListener() {
-        TextWatcher t = new TextWatcher() {
-
+        View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                //check for email input
-                if (getCurrentFocus() == emailTextview) {
-                    String email = emailTextview.getText().toString();
-                    String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-                    java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-                    java.util.regex.Matcher m = p.matcher(email);
-                    if (!m.matches()) {
-                        Toast.makeText(getBaseContext(), "invalid email address", Toast.LENGTH_LONG).show();
-                        s.clear();
-                    }
-                }
-                //check for phone input
-                else if (getCurrentFocus() == phoneTextview) {
-                    Toast.makeText(getBaseContext(), "invalid phone number", Toast.LENGTH_LONG).show();
-                    s.clear();
-                }
-                //check credit card input
-                else if (getCurrentFocus() == ccTextview) {
-                    Toast.makeText(getBaseContext(), "invalid credit card number", Toast.LENGTH_LONG).show();
-                    s.clear();
-                }
-                //check for location input
-                else if (getCurrentFocus() == locTextview) {
-
-                }
-                //check for definition input
-                else if (getCurrentFocus() == destTextview) {
-
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    validate();
                 }
             }
-
         };
-        destTextview.addTextChangedListener(t);
-        locTextview.addTextChangedListener(t);
-        ccTextview.addTextChangedListener(t);
-        phoneTextview.addTextChangedListener(t);
-        emailTextview.addTextChangedListener(t);
+        destTextview.setOnFocusChangeListener(onFocusChangeListener);
+        locTextview.setOnFocusChangeListener(onFocusChangeListener);
+        ccTextview.setOnFocusChangeListener(onFocusChangeListener);
+        phoneTextview.setOnFocusChangeListener(onFocusChangeListener);
+        emailTextview.setOnFocusChangeListener(onFocusChangeListener);
     }
+
+    private void validate() {
+        boolean isAllValid = true;
+        if (emailTextview.getText().length()>0){
+            String email = emailTextview.getText().toString();
+            String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+            java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+            java.util.regex.Matcher m = p.matcher(email);
+            if (!m.matches()) {
+//                            Toast.makeText(getBaseContext(), "invalid email address", Toast.LENGTH_LONG).show();
+                //todo add validation
+                emailTextview.setError("invalid email address");
+                isAllValid = false;
+            }
+        }
+        if (phoneTextview.getText().length()>0){
+            //todo add validation
+            phoneTextview.setError("invalid phone number");
+            isAllValid = false;
+        }
+        if (ccTextview.getText().length()>0) {
+            //todo add validation
+            ccTextview.setError("invalid credit card number");
+            isAllValid = false;
+        }
+        //check for location input
+        if (locTextview.getText().length()>0) {
+            //todo add validation
+        }
+        //check for definition input
+        if (destTextview.getText().length()>0) {
+            //todo add validation
+        }
+        orderButton.setEnabled(isAllValid);
+    }
+
     @Override
     /**
      * onClick method. Define what will happened at each button/ TextView press
