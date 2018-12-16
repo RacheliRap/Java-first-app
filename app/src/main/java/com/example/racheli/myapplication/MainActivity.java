@@ -27,7 +27,6 @@ import com.example.racheli.myapplication.model.entities.Ride;
 public class MainActivity extends Activity implements View.OnClickListener
 {
     //Widgets definitions
-    ArrayAdapter<String> adapter ;
     private Spinner statusSpinner;
     private EditText nameTextview;
     private EditText locTextview;
@@ -40,10 +39,9 @@ public class MainActivity extends Activity implements View.OnClickListener
     private EditText etChooseTime;
     private ProgressBar addProgressBar;
 
-
     /**
      * Find the Views in the layout
-     * @return void
+     *
      */
     private void findViews() {
         statusSpinner = (Spinner)findViewById( R.id.status_spinner );
@@ -70,7 +68,7 @@ public class MainActivity extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
-        initTextChangeListener();
+        //initTextChangeListener();
         }
 
     private void initSpinner() {
@@ -107,18 +105,18 @@ public class MainActivity extends Activity implements View.OnClickListener
                     java.util.regex.Matcher m = p.matcher(email);
                     if (!m.matches()) {
                         Toast.makeText(getBaseContext(), "invalid email address", Toast.LENGTH_LONG).show();
-                        emailTextview.setText("");
+                        s.clear();
                     }
                 }
                 //check for phone input
                 else if (getCurrentFocus() == phoneTextview) {
                     Toast.makeText(getBaseContext(), "invalid phone number", Toast.LENGTH_LONG).show();
-                    phoneTextview.setText("");
+                    s.clear();
                 }
                 //check credit card input
                 else if (getCurrentFocus() == ccTextview) {
                     Toast.makeText(getBaseContext(), "invalid credit card number", Toast.LENGTH_LONG).show();
-                    ccTextview.setText("");
+                    s.clear();
                 }
                 //check for location input
                 else if (getCurrentFocus() == locTextview) {
@@ -234,6 +232,14 @@ public class MainActivity extends Activity implements View.OnClickListener
                     }
                 },
                 1500);
+        ccTextview.setText("");
+        nameTextview.setText("");
+        locTextview.setText("");
+        destTextview.setText("");
+        emailTextview.setText("");
+        phoneTextview.setText("");
+        ccTextview.setText("");
+        etChooseTime.setText("");
     }
 
 }
