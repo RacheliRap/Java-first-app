@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/oliveGreen"
+    android:showAsAction="always">
 
     <Space
         android:layout_width="match_parent"
@@ -18,46 +20,6 @@
         android:layout_marginTop="8dp"
         android:entries="@array/Travel_status"
         />
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <EditText
-        android:id="@+id/name_textview"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/Name_message"
-        android:inputType="textPersonName"
-        android:textSize="20sp" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
-
-    <EditText
-        android:id="@+id/loc_textview"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
-        android:gravity="bottom"
-        android:hint="@string/location_message"
-        android:inputType="textPostalAddress"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/dest_textview"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
-        android:gravity="bottom"
-        android:hint="@string/dest_message"
-        android:inputType="textPostalAddress"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="449dp"
@@ -65,84 +27,314 @@
         app:layout_constraintEnd_toStartOf="@+id/time_button"
         app:layout_constraintStart_toStartOf="@+id/time_button">
 
-        <Spinner
-            android:id="@+id/time_spinner"
-            android:layout_width="0dp"
-            android:layout_height="31dp"
-            android:layout_marginEnd="51dp"
-            android:layout_marginTop="8dp"
-            android:entries="@array/Travel_Time"
-            app:layout_constraintEnd_toStartOf="@+id/etChooseTime"
+
+        <ImageView
+            android:id="@+id/locationView"
+            android:layout_width="25dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/timePicker_text"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toStartOf="@+id/loc_textview"
+            app:layout_constraintHorizontal_bias="0.128"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_location" />
+
+        <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+        <EditText
+            android:id="@+id/loc_textview"
+            android:layout_width="270dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:gravity="bottom"
+            android:hint="@string/location_message"
+            android:inputType="textPostalAddress"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.379"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="449dp"
+        android:layout_height="58dp"
+        app:layout_constraintEnd_toStartOf="@+id/time_button"
+        app:layout_constraintStart_toStartOf="@+id/time_button">
+
+        <EditText
+            android:id="@+id/dest_textview"
+            android:layout_width="270dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="bottom"
+            android:hint="@string/dest_message"
+            android:inputType="textPostalAddress"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.379"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/etChooseTime"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="end"
-            android:layout_marginEnd="52dp"
-            android:hint="Choose the time"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.111" />
-
-
-    </android.support.constraint.ConstraintLayout>
-
-    <EditText
-        android:id="@+id/email_textview"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/Email_message"
-        android:inputType="textEmailAddress"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/phone_textview"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/Phone_message"
-        android:inputType="phone"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/cc_textview"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/CreditCard_message"
-        android:inputType="number"
-        android:textSize="20sp" />
-
-    <!--<TimePicker
-        android:id="@+id/simpleTimePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:timePickerMode="spinner"/>-->
     <Space
         android:layout_width="match_parent"
         android:layout_height="10dp" />
 
-    <Button
-        android:id="@+id/order_button"
-        android:layout_width="270dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/Order_Button" />
+        <ImageView
+            android:id="@+id/t"
+            android:layout_width="31dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/timePicker_text"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toStartOf="@+id/dest_textview"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_locationpin" />
 
-    <ProgressBar
-        android:id="@+id/addProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="100" />
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="469dp"
+        android:background="@color/lightGrey"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="449dp"
+            android:layout_height="58dp"
+            app:layout_constraintEnd_toStartOf="@+id/time_button"
+            app:layout_constraintStart_toStartOf="@+id/time_button">
+
+            <Spinner
+                android:id="@+id/time_spinner"
+                android:layout_width="0dp"
+                android:layout_height="31dp"
+                android:layout_marginEnd="51dp"
+                android:layout_marginTop="8dp"
+                android:entries="@array/Travel_Time"
+                app:layout_constraintEnd_toStartOf="@+id/etChooseTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etChooseTime"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="52dp"
+                android:hint="@string/timePicker_text"
+                android:inputType="number"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.111"
+                />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="449dp"
+            android:layout_height="58dp"
+            app:layout_constraintEnd_toStartOf="@+id/name_textview"
+            app:layout_constraintStart_toStartOf="@+id/nameView">
+
+            <ImageView
+                android:id="@+id/nameView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/timePicker_text"
+                android:scaleType="fitXY"
+
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_name" />
+
+            <EditText
+                android:id="@+id/name_textview"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="@string/Name_message"
+                android:inputType="textPersonName"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.368"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="449dp"
+            android:layout_height="58dp"
+            app:layout_constraintEnd_toStartOf="@+id/time_button"
+            app:layout_constraintStart_toStartOf="@+id/time_button">
+
+            <EditText
+                android:id="@+id/email_textview"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="@string/Email_message"
+                android:inputType="textEmailAddress"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.379"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="67dp"
+                tools:layout_editor_absoluteY="2dp" />
+
+            <ImageView
+                android:id="@+id/emailView"
+                android:layout_width="25dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/timePicker_text"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_mail"
+                android:showAsAction="always"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="449dp"
+            android:layout_height="58dp"
+            app:layout_constraintEnd_toStartOf="@+id/phoneView"
+            app:layout_constraintStart_toStartOf="@+id/phone_textview">
+
+            <ImageView
+                android:id="@+id/phoneView"
+                android:layout_width="25dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/timePicker_text"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_phone" />
+
+            <EditText
+                android:id="@+id/phone_textview"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:ems="10"
+                android:hint="@string/Phone_message"
+                android:inputType="phone"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="68dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.379"
+                app:layout_constraintStart_toStartOf="parent"
+         />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="449dp"
+            android:layout_height="58dp"
+            app:layout_constraintEnd_toStartOf="@+id/cc_textview"
+            app:layout_constraintStart_toStartOf="@+id/ccView">
+
+            <ImageView
+                android:id="@+id/ccView"
+                android:layout_width="25dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/timePicker_text"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toStartOf="@+id/cc_textview"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_creditcard" />
+
+            <EditText
+                android:id="@+id/cc_textview"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:ems="10"
+                android:hint="@string/CreditCard_message"
+                android:inputType="number"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                tools:layout_editor_absoluteX="68dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.379"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+        </android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/order_button"
+            android:layout_width="270dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/Order_Button" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <ProgressBar
+            android:id="@+id/addProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100" />
+
+
+    </LinearLayout>
+
 
 
 </LinearLayout>

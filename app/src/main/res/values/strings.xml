@@ -4,7 +4,7 @@
     <string name="dest_message"> Enter your destination:</string>
     <string name="location_button">Add</string>
     <string name="Start_time">Start time</string>
-    <string name="End_time">Arrival time</string>
+    <string name="End_tu8ime">Arrival time</string>
     <string name="pick_time">Start time</string>
     <string name="Email_message">Enter your Email:</string>
     <string name="Phone_message">Enter your phone number:</string>
@@ -22,6 +22,7 @@
     <string name="Email_textbox">Email textbox</string>
     <string name="Phone_textbox">Phone textbox</string>
     <string name="cc_textbox">Credit card textbox</string>
+    <string name="timePicker_text">Pick a time</string>
 
     <string-array name="Travel_Time">
         <item>Departure time</item>

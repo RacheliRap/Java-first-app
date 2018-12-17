@@ -3,4 +3,38 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="aqua">#00FFFF</color>
+    <color name="Seashell">#FFF5EE</color>
+    <color name="Coral">#FF7F50</color>
+    <color name="MintCream">#F5FFFA</color>
+    <color name="Azure">#F0FFFF</color>
+    <color name="AliceBlue">#F0F8FF</color>
+    <color name="PowderBlue">#B0E0E6</color>
+    <color name="LightSteelBlue">#B0C4DE</color>
+    <color name="PaleTurquoise">#AFEEEE</color>
+    <color name="oliveGreen">#97bd4c</color>//background
+    <color name="BlueViolet">#8A2BE2</color>
+    <color name="LightSkyBlue">#87CEFA</color>
+    <color name="SkyBlue">#87CEEB</color>
+    <color name="lightGrey">#e6e6e6</color>//second layout background
+    <color name="Aquamarine">#7FFFD4</color>
+    <color name="SlateBlue">#6A5ACD</color>
+    <color name="MediumAquamarine">#66CDAA</color>
+    <color name="CornflowerBlue">#6495ED</color>
+    <color name="CadetBlue">#5F9EA0</color>
+    <color name="DarkSlateBlue">#483D8B</color>
+    <color name="SteelBlue">#4682B4</color>
+    <color name="RoyalBlue">#4169E1</color>
+    <color name="Turquoise">#40E0D0</color>
+
+
+
+
+
+
+
+
+
+
+
 </resources>

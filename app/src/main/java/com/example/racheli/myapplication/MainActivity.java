@@ -2,6 +2,10 @@ package com.example.racheli.myapplication;
 
 import android.app.Activity;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -23,6 +27,9 @@ import com.example.racheli.myapplication.model.backend.BackendFactory;
 import com.example.racheli.myapplication.model.datasource.Action;
 import com.example.racheli.myapplication.model.datasource.Firebase_DBManager;
 import com.example.racheli.myapplication.model.entities.Ride;
+
+
+import java.util.List;
 
 public class MainActivity extends Activity implements View.OnClickListener
 {
@@ -62,7 +69,6 @@ public class MainActivity extends Activity implements View.OnClickListener
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +84,6 @@ public class MainActivity extends Activity implements View.OnClickListener
 
             }
         });
-
     }
 
     /**
@@ -108,29 +113,64 @@ public class MainActivity extends Activity implements View.OnClickListener
             java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
             java.util.regex.Matcher m = p.matcher(email);
             if (!m.matches()) {
-//                            Toast.makeText(getBaseContext(), "invalid email address", Toast.LENGTH_LONG).show();
-                //todo add validation
                 emailTextview.setError("invalid email address");
                 isAllValid = false;
             }
         }
         if (phoneTextview.getText().length()>0){
-            //todo add validation
-            phoneTextview.setError("invalid phone number");
-            isAllValid = false;
+            if(phoneTextview.getText().toString().length() != 9) {
+                phoneTextview.setError("invalid phone number");
+                isAllValid = false;
+            }
         }
         if (ccTextview.getText().length()>0) {
-            //todo add validation
-            ccTextview.setError("invalid credit card number");
-            isAllValid = false;
+            if(ccTextview.getText().toString().length() != 16) {
+                ccTextview.setError("invalid credit card number");
+                isAllValid = false;
+            }
         }
         //check for location input
         if (locTextview.getText().length()>0) {
-            //todo add validation
+            try {
+                Geocoder gc = new Geocoder(this);
+                if (gc.isPresent()) {
+                    List<Address> list = gc.getFromLocationName(locTextview.getText().toString(), 1);
+                    Address address = list.get(0);
+                    double lat = address.getLatitude();
+                    double lng = address.getLongitude();
+                    Location locationA = new Location("A");
+                    locationA.setLatitude(lat);
+                    locationA.setLongitude(lng);
+                }
+            } catch (Exception e)
+            {
+                locTextview.setError("invalid Address.");
+                isAllValid = false;
+            }
         }
         //check for definition input
         if (destTextview.getText().length()>0) {
-            //todo add validation
+            try {
+                Geocoder gc = new Geocoder(this);
+                if (gc.isPresent()) {
+                    List<Address> list = gc.getFromLocationName(locTextview.getText().toString(), 1);
+                    Address address = list.get(0);
+                    double lat = address.getLatitude();
+                    double lng = address.getLongitude();
+                    Location locationA = new Location("A");
+                    locationA.setLatitude(lat);
+                    locationA.setLongitude(lng);
+                }
+            } catch (Exception e)
+            {
+                destTextview.setError("invalid Address.");
+                isAllValid = false;
+            }
+        }
+        if(locTextview.getText().length() == 0 || destTextview.getText().length() == 0
+                || ccTextview.getText().length() == 0 || phoneTextview.getText().length() == 0 )
+        {
+            isAllValid = false;
         }
         orderButton.setEnabled(isAllValid);
     }
@@ -241,6 +281,7 @@ public class MainActivity extends Activity implements View.OnClickListener
         ccTextview.setText("");
         etChooseTime.setText("");
     }
+
 
 }
 
