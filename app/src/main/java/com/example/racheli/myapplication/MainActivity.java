@@ -4,17 +4,22 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,7 +28,6 @@ import android.widget.Toast;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.Editable;
-
 import com.example.racheli.myapplication.model.backend.Backend;
 import com.example.racheli.myapplication.model.backend.BackendFactory;
 import com.example.racheli.myapplication.model.datasource.Action;
@@ -34,9 +38,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.util.List;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -54,7 +57,7 @@ import com.google.android.gms.location.LocationServices;
 
 public class MainActivity extends Activity implements View.OnClickListener/*, GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener*/ {
-
+    //Widgets definitions
     private Spinner statusSpinner;
     private EditText nameTextview;
     private EditText locTextview;
@@ -68,12 +71,10 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
     private ImageButton locationButton;
     private FusedLocationProviderClient mFusedLocationClient;
 
+    private ProgressBar addProgressBar;
 
     /**
-     * Find the Views in the layout<br />
-     * <br />
-     * Auto-created on 2018-12-12 20:15:04 by Android Layout Finder
-     * (http://www.buzzingandroid.com/tools/android-layout-finder)
+     * Find the Views in the layout
      */
     private void findViews() {
         statusSpinner = (Spinner) findViewById(R.id.status_spinner);
@@ -89,6 +90,8 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
         locationButton = (ImageButton) findViewById(R.id.imageButton2);
 
         //final EditText chooseTime = (EditText)findViewById(R.id.etChooseTime);
+        addProgressBar = findViewById(R.id.addProgressBar);
+
 
         etChooseTime.setOnClickListener(this);
         orderButton.setOnClickListener(this);
@@ -102,24 +105,116 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
         setContentView(R.layout.activity_main);
         findViews();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
+        initTextChangeListener();
+    }
     }
 
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) //what is this?
-    {
+    /**
+     * check for input correct using addTextChangedListener class.
+     */
+    public void initTextChangeListener() {
+        View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    validate();
+                }
+            }
+        };
+        destTextview.setOnFocusChangeListener(onFocusChangeListener);
+        locTextview.setOnFocusChangeListener(onFocusChangeListener);
+        ccTextview.setOnFocusChangeListener(onFocusChangeListener);
+        phoneTextview.setOnFocusChangeListener(onFocusChangeListener);
+        emailTextview.setOnFocusChangeListener(onFocusChangeListener);
+    }
 
+    private void validate() {
+        boolean isAllValid = true;
+        if (emailTextview.getText().length()>0){
+            String email = emailTextview.getText().toString();
+            String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+            java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+            java.util.regex.Matcher m = p.matcher(email);
+            if (!m.matches()) {
+                emailTextview.setError("invalid email address");
+                isAllValid = false;
+            }
+        }
+        if (phoneTextview.getText().length()>0){
+            if(phoneTextview.getText().toString().length() != 9) {
+                phoneTextview.setError("invalid phone number");
+                isAllValid = false;
+            }
+        }
+        if (ccTextview.getText().length()>0) {
+            if(ccTextview.getText().toString().length() != 16) {
+                ccTextview.setError("invalid credit card number");
+                isAllValid = false;
+            }
+        }
+        //check for location input
+        if (locTextview.getText().length()>0) {
+            try {
+                Geocoder gc = new Geocoder(this);
+                if (gc.isPresent()) {
+                    List<Address> list = gc.getFromLocationName(locTextview.getText().toString(), 1);
+                    Address address = list.get(0);
+                    double lat = address.getLatitude();
+                    double lng = address.getLongitude();
+                    Location locationA = new Location("A");
+                    locationA.setLatitude(lat);
+                    locationA.setLongitude(lng);
+                }
+            } catch (Exception e)
+            {
+                locTextview.setError("invalid Address.");
+                isAllValid = false;
+            }
+        }
+        //check for definition input
+        if (destTextview.getText().length()>0) {
+            try {
+                Geocoder gc = new Geocoder(this);
+                if (gc.isPresent()) {
+                    List<Address> list = gc.getFromLocationName(locTextview.getText().toString(), 1);
+                    Address address = list.get(0);
+                    double lat = address.getLatitude();
+                    double lng = address.getLongitude();
+                    Location locationA = new Location("A");
+                    locationA.setLatitude(lat);
+                    locationA.setLongitude(lng);
+                }
+            } catch (Exception e)
+            {
+                destTextview.setError("invalid Address.");
+                isAllValid = false;
+            }
+        }
+        if(locTextview.getText().length() == 0 || destTextview.getText().length() == 0
+                || ccTextview.getText().length() == 0 || phoneTextview.getText().length() == 0 )
+        {
+            isAllValid = false;
+        }
+        orderButton.setEnabled(isAllValid);
     }
 
     @Override
+    /**
+     * onClick method. Define what will happened at each button/ TextView press
+     */
     public void onClick(View view) {
+        // create timePickerDialog in respond to click the text view.
+
         if (view == etChooseTime) {
+            //create timePickerDialog
             TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
+                //set timePicker
                 public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
                     etChooseTime.setText((hourOfDay + ":" + minutes).toString());
                 }
             }, 0, 0, true);
-            timePickerDialog.show();
+            timePickerDialog.show(); // make timepicker to show on ui
         }
         if (view == locationButton) {
             mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -160,31 +255,35 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
     }
 
 
+    /**
+     * Create the ride and try to send it to Firebase_DBManager for insert to DB
+     */
     public void addRide(){
 
         Ride ride = getRide();
+        orderButton.setEnabled(false);//prevent the user press again, until the data is successfully insert into DB
 
         try{
             //String jsonObj = quickParse(ride);
             Backend instance = BackendFactory.getInstance();
-            instance.addRide(ride, new Action<Long>() {
+            instance.addRide(ride, new Action<String>() {
                 @Override
-                public void onSuccess(Long obj) {
+                public void onSuccess(String obj) {
                     Toast.makeText(getBaseContext(), "Succeeded" + obj, Toast.LENGTH_LONG).show();
-                   // resetView();
+                   resetView();
                 }
 
                 @Override
                 public void onFailure(Exception exception) {
                     Toast.makeText(getBaseContext(), "Error \n" + exception.getMessage(), Toast.LENGTH_LONG).show();
-                   // resetView();
+                   resetView();
                 }
 
                 @Override
                 public void onProgress(String status, double percent) {
                     if (percent != 100)
                         orderButton.setEnabled(false);
-                    //addStudentProgressBar.setProgress((int) percent);
+                    addProgressBar.setProgress((int) percent);
                 }
             });
         } catch (Exception e) {
@@ -193,6 +292,10 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
         };
     }
 
+    /**
+     * connect to each Wodget on activity_main, and get the data the user typed, in order to initalize Ride
+     * @return ride with relevant data
+     */
     public Ride getRide(){
         Ride ride = new Ride();
         ride.setPassengerName(this.nameTextview.getText().toString());
@@ -201,38 +304,40 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
         ride.setDestination(this.destTextview.getText().toString());
         ride.setOrigin(this.locTextview.getText().toString());
         ride.setCreditCard(this.ccTextview.getText().toString());
-        String time = this.etChooseTime.getText().toString();
-        time = time + ":00";
-        Time timeValue = Time.valueOf(time);
+        String time = (this.etChooseTime.getText().toString());
+        //time = time + ":00";
+        //Time timeValue = Time.valueOf(time);
        // String timeOption = (String)this.timeSpinner.getSelectedItem();
-       /* if(timeOption == "Departure time"){
-            ride.setStartingTime(timeValue);
+       if(time == "Arrival time"){
+           ride.setEndingTime(time);
         }
         else
-        {*/
-           ride.setEndingTime(timeValue);
-        //}
+        {
+            ride.setStartingTime(time);
+        }
 
         return ride;
     }
-    //the function converts object to Json format
-   /* public static String quickParse(Ride ride) throws IllegalArgumentException, IllegalAccessException, JSONException {
-        JSONObject jsonObj = new JSONObject();
-        try {
-            jsonObj.put("Name", ride.getPassengerName());
-            jsonObj.put("Origin:", ride.getOrigin());
-            jsonObj.put("Destination:", ride.getDestination());
-            jsonObj.put("Time", ride.getEndingTime());
-            jsonObj.put("Phone number", ride.getPhoneNumber());
-            jsonObj.put("email", ride.getPassengerMail());
-            jsonObj.put("Credit card", ride.getCreditCard());
+    private void resetView() {
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        addProgressBar.setProgress(0);
+                        orderButton.setEnabled(true);
+                    }
+                },
+                1500);
+        ccTextview.setText("");
+        nameTextview.setText("");
+        locTextview.setText("");
+        destTextview.setText("");
+        emailTextview.setText("");
+        phoneTextview.setText("");
+        ccTextview.setText("");
+        etChooseTime.setText("");
+    }
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return jsonObj.toString();
-    }*/
 
 }
 

@@ -7,5 +7,5 @@ import com.example.racheli.myapplication.model.entities.Ride;
 import org.json.JSONObject;
 
 public interface Backend {
-    void addRide(Ride ride, final Action<Long> action) throws Exception;
+    void addRide(Ride ride, final Action<String> action) throws Exception;
 }
