@@ -1,62 +1,37 @@
-package com.example.racheli.myapplication;
+package com.example.racheli.myapplication.controller;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.text.Editable;
+
+import com.example.racheli.myapplication.R;
 import com.example.racheli.myapplication.model.backend.Backend;
 import com.example.racheli.myapplication.model.backend.BackendFactory;
 import com.example.racheli.myapplication.model.datasource.Action;
-import com.example.racheli.myapplication.model.datasource.Firebase_DBManager;
 import com.example.racheli.myapplication.model.entities.Ride;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-
-import java.util.List;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
 
-public class MainActivity extends Activity implements View.OnClickListener/*, GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener*/ {
+public class MainActivity extends Activity implements View.OnClickListener{
     //Widgets definitions
     private Spinner statusSpinner;
     private EditText nameTextview;
@@ -70,7 +45,6 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
     private EditText etChooseTime;
     private ImageButton locationButton;
     private FusedLocationProviderClient mFusedLocationClient;
-
     private ProgressBar addProgressBar;
 
     /**
@@ -88,10 +62,7 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
         orderButton = (Button) findViewById(R.id.order_button);
         etChooseTime = findViewById(R.id.etChooseTime);
         locationButton = (ImageButton) findViewById(R.id.imageButtonLocation);
-
-        //final EditText chooseTime = (EditText)findViewById(R.id.etChooseTime);
         addProgressBar = findViewById(R.id.addProgressBar);
-
 
         etChooseTime.setOnClickListener(this);
         orderButton.setOnClickListener(this);
@@ -139,21 +110,21 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
             java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
             java.util.regex.Matcher m = p.matcher(email);
             if (!m.matches()) {
-                emailTextview.setError("invalid email address");
+                emailTextview.setError("Invalid email address");
                 isAllValid = false;
             }
         }
         //checking correctness of phone number
         if (phoneTextview.getText().length()>0){
             if(phoneTextview.getText().toString().length() != 10) {
-                phoneTextview.setError("invalid phone number");
+                phoneTextview.setError("Invalid phone number");
                 isAllValid = false;
             }
         }
         //checking correctness of creditcard format
         if (ccTextview.getText().length()>0) {
             if(ccTextview.getText().toString().length() != 16) {
-                ccTextview.setError("invalid credit card number");
+                ccTextview.setError("Invalid credit card number");
                 isAllValid = false;
             }
         }
@@ -172,7 +143,7 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
                 }
             } catch (Exception e)
             {
-                locTextview.setError("invalid Address.");
+                locTextview.setError("Invalid Address.");
                 isAllValid = false;
             }
         }
@@ -193,7 +164,7 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
                 }
             } catch (Exception e)
             {
-                destTextview.setError("invalid Address.");
+                destTextview.setError("Invalid Address.");
                 isAllValid = false;
             }
         }
@@ -224,6 +195,7 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
             }, 0, 0, true);
             timePickerDialog.show(); // make timepicker to show on ui
         }
+        //handle location button
         if (view == locationButton) {
             mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
@@ -244,21 +216,23 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
         }
     }
 
+    /**
+     *save the information of the location in strings, and write it into the textview
+     */
     public void getLocation(Location location){
         Geocoder geocoder;
         List<Address> addresses;
         try {
             geocoder = new Geocoder(this, Locale.getDefault());
-
+            //all theinformation extract from location
             addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
             String address = addresses.get(0).getAddressLine(0);
             String city = addresses.get(0).getLocality();
             String country = addresses.get(0).getCountryName();
             locTextview.setText(address + ", " + city);
         }
         catch (Exception e){
-
+            Toast.makeText(getBaseContext(), "ERROR", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -296,12 +270,12 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
             });
         } catch (Exception e) {
             Toast.makeText(getBaseContext(), "Error ", Toast.LENGTH_LONG).show();
-            //resetView();
-        };
+            resetView();
+        }
     }
 
     /**
-     * connect to each Wodget on activity_main, and get the data the user typed, in order to initalize Ride
+     * connect to each Widget on activity_main, and get the data the user typed, in order to initalize Ride
      * @return ride with relevant data
      */
     public Ride getRide(){
@@ -316,7 +290,7 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
         //time = time + ":00";
         //Time timeValue = Time.valueOf(time);
        // String timeOption = (String)this.timeSpinner.getSelectedItem();
-       if(time == "Arrival time"){
+       if(time.equals("Arrival time")){
            ride.setEndingTime(time);
         }
         else
@@ -326,6 +300,10 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
 
         return ride;
     }
+
+    /**
+     * run a progress bar while wait for date to be insert to fireBase, and then clear all the text fields
+     */
     private void resetView() {
         new Handler().postDelayed(
                 new Runnable() {

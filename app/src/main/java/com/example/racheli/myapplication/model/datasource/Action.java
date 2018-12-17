@@ -1,5 +1,9 @@
 package com.example.racheli.myapplication.model.datasource;
 
+/**
+ * Interface action, declare function for use when insert, remove or update data from fireBase
+ * @param <T>
+ */
 public interface Action<T> {
     void onSuccess(T obj);
 

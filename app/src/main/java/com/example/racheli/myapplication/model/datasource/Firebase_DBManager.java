@@ -18,24 +18,7 @@ import java.util.Map;
 
 public class Firebase_DBManager implements Backend{
 
-
-    //public interface Action<T> {
-      //  void onSuccess(T obj);
-//
-  //      void onFailure(Exception exception);
-
-    //    void onProgress(String status, double percent);
-    //}
-
-    public interface NotifyDataChange<T> {
-        void OnDataChanged(T obj);
-
-        void onFailure(Exception exception);
-    }
-
     static DatabaseReference rideRef;
-
-
     static {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -67,6 +50,4 @@ public class Firebase_DBManager implements Backend{
             }
         });
     }
-
-
 }
