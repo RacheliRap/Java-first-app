@@ -87,7 +87,7 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
         ccTextview = (EditText) findViewById(R.id.cc_textview);
         orderButton = (Button) findViewById(R.id.order_button);
         etChooseTime = findViewById(R.id.etChooseTime);
-        locationButton = (ImageButton) findViewById(R.id.imageButton2);
+        locationButton = (ImageButton) findViewById(R.id.imageButtonLocation);
 
         //final EditText chooseTime = (EditText)findViewById(R.id.etChooseTime);
         addProgressBar = findViewById(R.id.addProgressBar);
@@ -106,7 +106,6 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
         findViews();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         initTextChangeListener();
-    }
     }
 
     /**
@@ -128,8 +127,12 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
         emailTextview.setOnFocusChangeListener(onFocusChangeListener);
     }
 
+    /**
+     * function checks if all the inputs are correct
+     */
     private void validate() {
         boolean isAllValid = true;
+        //checking correctness of email address
         if (emailTextview.getText().length()>0){
             String email = emailTextview.getText().toString();
             String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -140,12 +143,14 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
                 isAllValid = false;
             }
         }
+        //checking correctness of phone number
         if (phoneTextview.getText().length()>0){
-            if(phoneTextview.getText().toString().length() != 9) {
+            if(phoneTextview.getText().toString().length() != 10) {
                 phoneTextview.setError("invalid phone number");
                 isAllValid = false;
             }
         }
+        //checking correctness of creditcard format
         if (ccTextview.getText().length()>0) {
             if(ccTextview.getText().toString().length() != 16) {
                 ccTextview.setError("invalid credit card number");
@@ -171,9 +176,11 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
                 isAllValid = false;
             }
         }
+
         //check for definition input
         if (destTextview.getText().length()>0) {
             try {
+                //converts string to locATION
                 Geocoder gc = new Geocoder(this);
                 if (gc.isPresent()) {
                     List<Address> list = gc.getFromLocationName(locTextview.getText().toString(), 1);
@@ -190,6 +197,7 @@ public class MainActivity extends Activity implements View.OnClickListener/*, Go
                 isAllValid = false;
             }
         }
+        //enables adRide Button only if all the textboxes are filled in
         if(locTextview.getText().length() == 0 || destTextview.getText().length() == 0
                 || ccTextview.getText().length() == 0 || phoneTextview.getText().length() == 0 )
         {
