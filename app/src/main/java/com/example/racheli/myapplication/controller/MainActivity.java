@@ -286,6 +286,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         ride.setDestination(this.destTextview.getText().toString());
         ride.setOrigin(this.locTextview.getText().toString());
         ride.setCreditCard(this.ccTextview.getText().toString());
+        ride.setStatus(this.statusSpinner.getSelectedItem().toString());
         String time = (this.etChooseTime.getText().toString());
         //time = time + ":00";
         //Time timeValue = Time.valueOf(time);

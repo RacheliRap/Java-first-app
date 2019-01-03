@@ -15,8 +15,8 @@ public class Ride implements java.io.Serializable{
 
     //private static final long serialVersionUID = 1L;
     //private Long ID;
-    @Exclude
-    private Status status;
+    private String driverName;
+    private String status;
     private String origin;
     private String destination;
     private String startingTime = "";
@@ -37,12 +37,24 @@ public class Ride implements java.io.Serializable{
     }
 
 
-    public Status getStatus() {
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
         return status;
     }
 
     public void setStatus(Status status) {
-        this.status = status;
+        this.status = status.toString();
     }
 
     public String getStartingTime() {

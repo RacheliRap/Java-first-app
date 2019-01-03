@@ -34,7 +34,6 @@ public class Firebase_DBManager implements Backend{
     @Override
     public void addRide(final Ride ride, final Action<String> action) throws Exception
     {
-        final Map<String,Object> dataMap = new HashMap<String, Object>();
         rideRef.push().setValue(ride).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
